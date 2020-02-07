@@ -247,6 +247,18 @@
             </li>
             {{/each}}
     </script>
+    <!-- 排行榜 -->
+    <script id="tmpRank" type="text/html">
+        {{each data item idx}} {{if idx == 0}}
+        <li><span class="first">{{idx+1}}</span><a href="#">{{item.title}}</a></li>
+        {{else if idx == 1}}
+        <li><span class="second">{{idx+1}}</span><a href="#">{{item.title}}</a></li>
+        {{else if idx == 2}}
+        <li><span class="third">{{idx+1}}</span><a href="#">{{item.title}}</a></li>
+        {{else}}
+        <li><span>{{idx+1}}</span><a href="#">{{item.title}}</a></li>
+        {{/if}} {{/each}}
+    </script>
 
     <script>
         //  获取文章的类型并显示
@@ -269,7 +281,18 @@
             } else {
                 alert(res.msg)
             }
-        })
+        });
+        // 显示排行文章
+        article.getRank().then(function(res) {
+            console.log(res);
+            if (res.code === 200) {
+                let htmlStr = template("temRank", res)
+                console.log(htmlStr);
+                $("#rank").html(htmlStr)
+            } else {
+                alert(res.msg)
+            }
+        });
     </script>
 </body>
 
