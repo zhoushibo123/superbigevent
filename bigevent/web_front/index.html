@@ -55,7 +55,7 @@
 
     <div class="main_con clearfix">
         <div class="left_con">
-            <ul class="focus_list">
+            <ul class="focus_list" id="focus_list">
                 <li class="first">
                     <a href="#"><img src="images/pic01.jpg" alt=""></a>
                     <p>图片说明</p>
@@ -225,14 +225,29 @@
     <script src="js/jquery-1.12.4.min.js"></script>
     <script src="js/util/config.js"></script>
     <script src="js/util/category.js"></script>
+    <script src="js/util/article.js"></script>
     <script src="js/template-web.js"></script>
 
-
+    <!-- 文章的类型 -->
     <script id="cate" type="text/html">
         {{each data item}}
         <li><a href="./list.html">{{item.name}}</a></li>
         {{/each}}
     </script>
+    <!-- 焦点图 -->
+    <script id="focus" type="text/html">
+        {{each data item index}} {{if index ==0}}
+        <!-- 让第一个图有first类样式 -->
+        <li class="first">
+            {{else}}
+            <li>
+                {{/if}}
+                <a href="#"><img src="{{item.cover}}" alt=""></a>
+                <p>{{item.title}}</p>
+            </li>
+            {{/each}}
+    </script>
+
     <script>
         //  获取文章的类型并显示
         category.get().then(function(res) {
@@ -241,6 +256,19 @@
             console.log(htmlStr);
             $("#left_menu").html(htmlStr)
             $("#level_two_menu").append(htmlStr)
+        });
+
+
+        // 2显示焦点图  调接口 取数据 渲染界面
+        article.getFouceFive().then(function(res) {
+            console.log(res);
+            if (res.code === 200) {
+                let htmlStr = template("focus", res)
+                console.log(htmlStr);
+                $("#focus_list").html(htmlStr)
+            } else {
+                alert(res.msg)
+            }
         })
     </script>
 </body>
