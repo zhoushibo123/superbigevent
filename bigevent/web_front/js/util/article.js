@@ -17,4 +17,7 @@ var article = {
     getRank: function(type) {
         return $.get(APILIST.article_rank, { 'type': type })
     },
+    getLastest: function() {
+        return $.get(APILIST.article_last)
+    }
 }
