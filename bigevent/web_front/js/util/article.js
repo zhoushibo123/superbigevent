@@ -13,11 +13,18 @@ var article = {
     getById: function(id) {
         return $.get(APILIST.article_get, { 'id': id })
     },
-
+    // 获取文章排行
     getRank: function(type) {
         return $.get(APILIST.article_rank, { 'type': type })
     },
+    // 获取最新文章
     getLastest: function() {
         return $.get(APILIST.article_last)
-    }
+    },
+    // 在例表中 用来获取文章列表数据
+    // type  文章类型编号
+    // page 当前第几页
+    getList: function(type, page) {
+        return $.get(APILIST.article_get, { "type": type, "page": page })
+    },
 }
